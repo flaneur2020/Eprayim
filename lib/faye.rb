@@ -1,5 +1,9 @@
-require 'faye/parse.rb'
-require 'faye/dom.rb'
+$:.unshift << File.dirname(__FILE__)
+
+require 'faye/element.rb'
+require 'faye/parser.rb'
+require 'faye/render.rb'
+require 'faye/render/html.rb'
 
 module Faye
   class Doc

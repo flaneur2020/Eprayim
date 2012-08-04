@@ -1,5 +1,3 @@
-require 'dom.rb'
-
 module Faye
 
   class Parser

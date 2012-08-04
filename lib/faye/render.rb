@@ -1,6 +1,5 @@
 module Faye
   module Render
-
     class Base
       class << self
         attr_reader :rules
