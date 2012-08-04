@@ -1,8 +1,5 @@
 require 'minitest/autorun'
 require 'test/helpers.rb'
-require 'lib/faye.rb'
-
-include Faye
 
 class TestElement < MiniTest::Unit::TestCase
   def setup
@@ -27,7 +24,3 @@ class TestElement < MiniTest::Unit::TestCase
     assert_equal t, '<blockquote>q<b>b<i>i</i></b></blockquote>'
   end
 end
-
-
-
-
