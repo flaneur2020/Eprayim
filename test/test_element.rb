@@ -23,4 +23,9 @@ class TestElement < MiniTest::Unit::TestCase
     t = @r.render(e)
     assert_equal t, '<blockquote>q<b>b<i>i</i></b></blockquote>'
   end
+
+  def test_to_html
+    e = Element.new(:quote, 'q', Element.new(:bold, 'b', Element.new(:italic, 'i')))
+    assert_equal e.to_html, '<blockquote>q<b>b<i>i</i></b></blockquote>'
+  end
 end
