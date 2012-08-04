@@ -17,6 +17,8 @@ module Faye
           rule.call(*args)
         end
 
+        protected
+
         def rule(type, &blk)
           @rules ||= {}
           @rules[type] = blk
