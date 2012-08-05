@@ -28,4 +28,16 @@ class TestElement < MiniTest::Unit::TestCase
     e = Element.new(:quote, 'q', Element.new(:bold, 'b', Element.new(:italic, 'i')))
     assert_equal e.to_html, '<blockquote>q<b>b<i>i</i></b></blockquote>'
   end
+
+  def test_equal
+    e1 = Element.new(:quote, 'q', Element.new(:bold, 'b', Element.new(:italic, 'i')))
+    e2 = Element.new(:quote, 'q', Element.new(:bold, 'b', Element.new(:italic, 'i')))
+    assert_equal e1, e2
+  end
+
+  def test_not_equal
+    e1 = Element.new(:quote, 'q', Element.new(:bold, 'c', Element.new(:italic, 'i')))
+    e2 = Element.new(:quote, 'q', Element.new(:bold, 'b', Element.new(:italic, 'i')))
+    assert e1 != e2
+  end
 end

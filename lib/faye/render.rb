@@ -18,14 +18,12 @@ module Faye
         end
 
         protected
-
         def rule(type, &blk)
           @rules ||= {}
           @rules[type] = blk
         end
       end
     end
-
   end
 end
 
