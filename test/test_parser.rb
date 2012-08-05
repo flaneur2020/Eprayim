@@ -46,12 +46,12 @@ class TestElement < MiniTest::Unit::TestCase
   end
 
   def test_nested_quote
-    str = "> 1st\n> > > 3rd\n> > > 3rd\n> > 2nd\n> 1st"
+    str = "> 1st\n> > > 3rd\n> > > 3rd\n> > 2nd\n> > 2nd\n> 1st"
     r = Parser.new(str).parse_block
     e = Element.new(:quote, '1st', 
                     Element.new(:quote, 
                                 Element.new(:quote, '3rd', '3rd'),
-                                '2nd'),
+                                '2nd', '2nd'),
                    '1st')
     assert_equal e, r
   end
@@ -60,5 +60,11 @@ class TestElement < MiniTest::Unit::TestCase
     str = "> 1st\n > > > 3rd\n> > > 3rd\n> > 2nd\n> 1st"
     r = Parser.new(str).parse_block
     assert_equal r, Element.new(:quote, '1st')
+  end
+
+  def test_normal_list
+    str = "+ i1\n+ i2\n+ i3"
+    r = Parser.new(str).parse_block
+    assert_equal r, Element.new(:list, 'i1', 'i2', 'i3')
   end
 end

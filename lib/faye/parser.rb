@@ -4,6 +4,8 @@ module Faye
       [:head,   /\A(?<level>=+)\s*(?<title>[^=#\n]*)(?:#(?<anchor>[^\n]*))?\s*/],
       [:code,   /\A```(?<code>.*?)```\s*$/m],
       [:quote,  /\A(>([^\n]*)\n*)+/m],
+      [:list,   /\A(\* ([^\n]*)\n*)+/],
+      [:list,   /\A(\+ ([^\n]*)\n*)+/],
     ]
 
     # -------------------------
@@ -60,6 +62,15 @@ module Faye
         level_last = level
       end
       stack.last
+    end
+
+    def parse_list(str, m)
+      d = str[0]
+      r = str.split("#{d} ").reject(&:empty?).map do |i|
+        i.strip
+      end
+      t = d == '+'? :list : :olist
+      Element.new(t, *r)
     end
 
   end
