@@ -121,6 +121,7 @@ class TestParser < MiniTest::Unit::TestCase
     assert_equal PI('[ http://google.com]'), [E(:link, 'http://google.com', 'http://google.com')]
     assert_equal PI('[ baidu http://baidu.com]'), [E(:link, 'http://baidu.com', 'baidu')]
     assert_equal PI('[ baidu google http://baidugoogle.com]'), [E(:link, 'http://baidugoogle.com', 'baidu google')]
+    assert_equal PI('[ *baidu* google http://baidugoogle.com]'), [E(:link, 'http://baidugoogle.com', E(:bold, 'baidu'), ' google')]
     assert_equal PI('a[]'), ['a[]']
   end
 
