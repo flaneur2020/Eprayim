@@ -97,7 +97,7 @@ class TestParser < MiniTest::Unit::TestCase
   def test_parse_inline
     str = '***abc*bcd&*e*'
     r = Parser.new('').parse_inline(str)
-    assert_equal nil, r 
+    assert_equal  r, [Element.new(:bold, '*'), 'abc', Element.new(:bold, 'bcd&'), 'e*'] 
   end
 
 end
