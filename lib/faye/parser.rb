@@ -138,7 +138,7 @@ module Faye
       else
         content = m[:content]
         content = m[:url] if m[:content].nil? or m[:content].empty?
-        Element.new(:link, m[:url].strip, content.strip)
+        Element.new(:link, m[:url].strip, parse_inline(content.strip))
       end
     end
 
