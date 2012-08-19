@@ -13,14 +13,12 @@ class TestParser < MiniTest::Unit::TestCase
 
   def test_parse_head_with_anchor
     str = "== h #a"
-    r = Parser.new(str).parse_block
-    assert_equal r, E(:head, 2, 'h', 'a')
+    assert_equal PB(str), E(:head, 2, 'h', 'a')
   end
 
   def test_parse_head_with_trailing_text
     str = "== h #a\nhello"
-    r = Parser.new(str).parse_block
-    assert_equal r, E(:head, 2, 'h', 'a')
+    assert_equal PB(str), E(:head, 2, 'h', 'a')
   end
 
   def test_parse_head_code
@@ -34,49 +32,42 @@ class TestParser < MiniTest::Unit::TestCase
 
   def test_code_escape
     str = "```print 1 < 2```"
-    r = Parser.new(str).parse_block
-    assert_equal r.to_html, '<pre><code>print 1 &lt; 2</code></pre>'
+    assert_equal PB(str).to_html, '<pre><code>print 1 &lt; 2</code></pre>'
   end
 
   def test_parse_quote
     str = "> quote \n> quote"
-    r = Parser.new(str).parse_block
-    assert_equal r, E(:quote, 'quote', 'quote')
+    assert_equal PB(str), E(:quote, 'quote', 'quote')
   end
 
   def test_nested_quote
     str = "> 1st\n> > > 3rd\n> > > 3rd\n> > 2nd\n> > 2nd\n> 1st"
-    r = Parser.new(str).parse_block
     e = E(:quote, '1st', 
                     E(:quote, 
                                 E(:quote, '3rd', '3rd'),
                                 '2nd', '2nd'),
                    '1st')
-    assert_equal e, r
+    assert_equal e, PB(str)
   end
 
   def test_bad_nested_quote
     str = "> 1st\n > > > 3rd\n> > > 3rd\n> > 2nd\n> 1st"
-    r = Parser.new(str).parse_block
-    assert_equal r, E(:quote, '1st')
+    assert_equal PB(str), E(:quote, '1st')
   end
 
   def test_normal_list
     str = "+ i1\n+ i2\n+ i3"
-    r = Parser.new(str).parse_block
-    assert_equal r, E(:list, 'i1', 'i2', 'i3')
+    assert_equal PB(str), E(:list, 'i1', 'i2', 'i3')
   end
 
   def test_list_with_multi_line_item
     str = "+ i1\n  i1\n  i1\n\n  i1\n+ i2\n+ i3"
-    r = Parser.new(str).parse_block
-    assert_equal r, E(:list, E(:doc, *([E(:para, 'i1')] * 4)), 'i2', 'i3')
+    assert_equal PB(str), E(:list, E(:doc, *([E(:para, 'i1')] * 4)), 'i2', 'i3')
   end
 
   def test_list_with_multi_line_item_to_html
     str = "+ i1\n  i1\n  i1\n\n  i1\n+ i2\n+ i3"
-    r = Parser.new(str).parse_block
-    assert_equal r.to_html, "<ul><li><p>i1</p><p>i1</p><p>i1</p><p>i1</p></li><li>i2</li><li>i3</li></ul>"
+    assert_equal PB(str).to_html, "<ul><li><p>i1</p><p>i1</p><p>i1</p><p>i1</p></li><li>i2</li><li>i3</li></ul>"
   end
 
   def test_hr
@@ -90,18 +81,25 @@ class TestParser < MiniTest::Unit::TestCase
 
   def test_empty_text
     str = ''
-    r = Parser.new(str).parse_block
-    assert_equal nil, r
+    assert_equal nil, PB(str)
   end
 
   def test_parse_inline
     str = '***abc*bcd&*e*'
-    r = Parser.new('').parse_inline(str)
-    assert_equal r, [E(:bold, '*'), 'abc', E(:bold, 'bcd&'), 'e*'] 
+    assert_equal PI(str), [E(:bold, '*'), 'abc', E(:bold, 'bcd&'), 'e*'] 
   end
 
   def test_strong
     str = '**_**'
-    r = Parser.new('').parse_inline(str)
+    assert_equal PI(str), [E(:strong, '_')]
+  end
+
+  def test_inline_html
+    assert_equal E(:strong, '_').to_html, '<strong>_</strong>'
+  end
+
+  def test_nested_inline
+    str = '*b_bibi_b~bdbd~*rr'
+    assert_equal PI(str), [E(:bold, 'b', E(:italic, 'bibi'), 'b', E(:deleted, 'bdbd')), 'rr'] 
   end
 end

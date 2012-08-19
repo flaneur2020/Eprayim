@@ -2,7 +2,7 @@ module Faye
 
   # 
   class Element
-    TYPES = %w{ doc head para quote code list olist hr bold strong italic icode image link }.map(&:to_sym)
+    TYPES = %w{ doc head para quote code list olist hr bold strong deleted italic icode image link }.map(&:to_sym)
 
     attr_reader :type
     attr_reader :children

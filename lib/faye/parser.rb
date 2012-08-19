@@ -41,7 +41,7 @@ module Faye
           when /icode/ 
             Element.new(:icode, m[:content])
           else
-            Element.new(type, parse_inline(m[:content]))
+            Element.new(type, *parse_inline(m[:content]))
           end
           return [r, *parse_inline(m.post_match)] if i-1 < 0
           return [text[0..i-1], r, *parse_inline(m.post_match)]
