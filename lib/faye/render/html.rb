@@ -18,7 +18,7 @@ module Faye
       rule(:icode)  {|s|  "<code>#{h s}</code>" }
       rule(:deleted){|*a| "<del>#{a.join}</del>" }
       rule(:image)  {|l, a, f| "<img src='#{l}' alt='#{a}' style='float: #{f}'></img>" }
-      rule(:link)   {|l, s| "<a href='#{l}'>#{s}</a>"}
+      rule(:link)   {|l, *a| "<a href='#{l}'>#{a.join}</a>"}
 
       def HTML.h(t)
         CGI::escapeHTML(t)
