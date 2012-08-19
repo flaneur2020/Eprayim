@@ -28,7 +28,6 @@ module Faye
     end
 
     def parse_inline(text)
-      puts text
       return [] if text.empty?
       i = 0
       while not text[i..-1].empty?
@@ -59,7 +58,8 @@ module Faye
         @text_tail = m.post_match
         return self.send("parse_#{type}", m.to_s, m)
       end
-      raise 'No proper pattern was matched'
+      p, @text_tail = @text_tail.split(/\n\r?\n\r?/, 2)
+      return parse_para(p, nil)
     end
 
     private
@@ -113,6 +113,10 @@ module Faye
       end
       t = d == '+'? :list : :olist
       Element.new(t, *r)
+    end
+
+    def parse_para(str, _)
+      Element.new(:para, str.strip)
     end
 
     def parse_link(str, m)

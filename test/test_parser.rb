@@ -84,6 +84,16 @@ class TestParser < MiniTest::Unit::TestCase
     assert_equal nil, PB(str)
   end
 
+  def test_para
+    assert_equal PB("p1\np2\n\n"), E(:para, "p1\np2")
+    p = P("p1\n\np2\n\n")
+    assert_equal p.parse_block, E(:para, "p1")
+    assert_equal p.parse_block, E(:para, "p2")
+    assert_equal PB("p1\np2\n\n"), E(:para, "p1\np2")
+  end
+
+  # -----------------------------------------------------
+
   def test_parse_inline
     str = '***abc*bcd&*e*'
     assert_equal PI(str), [E(:bold, '*'), 'abc', E(:bold, 'bcd&'), 'e*'] 

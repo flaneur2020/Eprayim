@@ -12,6 +12,10 @@ def PI(*args)
   Parser.new('').parse_inline(*args)
 end
 
+def P(*args)
+  Parser.new(*args)
+end
+
 def PB(*args)
   Parser.new(*args).parse_block
 end
