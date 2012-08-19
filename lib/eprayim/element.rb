@@ -1,4 +1,4 @@
-module Faye
+module Eprayim
 
   # 
   class Element

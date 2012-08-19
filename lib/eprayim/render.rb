@@ -1,4 +1,4 @@
-module Faye
+module Eprayim
   module Render
     class Base
       class << self

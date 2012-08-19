@@ -1,8 +1,8 @@
 # README
 
-Faye is a simple & sometimes naive markup languange which inspired by Markdown, txt2tags and so on. It reads markups and coverts them into HTML. 
+_Eprayim_ is a simple & sometimes naive markup languange which inspired by Markdown, txt2tags and so on. It reads markups and coverts them into HTML. 
 
-In the beginning when I was a young boy whom has never heard Markdown, it's a nightmare for me to write documents. So when I decided to start a translation project, I reinvented the wheel. It's quick and dirty, but works for myself. After years, when I wanna review my documents, my wheel kicked my ass.
+In the beginning when I was a young boy whom had never heard Markdown, it's a nightmare for me to write documents. So when I decided to start a translation project, I reinvented the wheel. It's quick and dirty, but works for myself. After years, when I wanna review my documents, my wheel kicked my ass.
 
 So the wheel is re-reinvented.
 

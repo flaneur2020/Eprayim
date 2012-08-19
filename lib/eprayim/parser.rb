@@ -1,4 +1,4 @@
-module Faye
+module Eprayim
   class Parser
     BLOCK_RULES = [
       [:head,   /\A(?<level>=+)\s*(?<title>[^=#\n]*)(?:#(?<anchor>[^\n]*))?\s*/],

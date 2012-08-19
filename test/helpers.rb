@@ -1,8 +1,8 @@
 $:.unshift File.dirname(__FILE__) + '/lib'
 
-require 'lib/faye.rb'
+require 'lib/eprayim.rb'
 
-include Faye
+include Eprayim
 
 def E(*args)
   Element.new(*args)

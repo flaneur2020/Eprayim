@@ -1,11 +1,11 @@
 $:.unshift << File.dirname(__FILE__)
 
-require 'faye/element.rb'
-require 'faye/parser.rb'
-require 'faye/render.rb'
-require 'faye/render/html.rb'
+require 'eprayim/element.rb'
+require 'eprayim/parser.rb'
+require 'eprayim/render.rb'
+require 'eprayim/render/html.rb'
 
-module Faye
+module Eprayim
   class Doc
     # the origin text before parse
     attr_reader :text

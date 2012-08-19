@@ -1,6 +1,6 @@
 require 'cgi'
 
-module Faye
+module Eprayim
   module Render
     class HTML < Base
       rule(:doc)    {|*a| a.join }
