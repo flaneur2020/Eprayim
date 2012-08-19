@@ -8,6 +8,13 @@ So the wheel is re-reinvented.
 
 (**Note**: All belows are under construction.)
 
+## Usage
+
+```ruby
+require 'lib/eprayim'
+
+```
+
 ## Grammar
 
 ### Inline Elements
@@ -15,7 +22,7 @@ So the wheel is re-reinvented.
 + `*bold*`: **bold**
 + `**strong**`: **strong**
 + `_italic_`: *italic*
-+ ~deleted~: ~deleted~
++ ~deleted~: <del>deleted</del>
 + \``inline code`\`: `inline code`
 
 And you may use backslash escapes for the following characters:
@@ -66,7 +73,7 @@ Quotes is just the same as Markdown:
 
 **Codes**
 
-    ```ruby
+    ```
     def hello():
         'world'
     end
