@@ -122,6 +122,9 @@ class TestParser < MiniTest::Unit::TestCase
     assert_equal PI('[ baidu http://baidu.com]'), [E(:link, 'http://baidu.com', 'baidu')]
     assert_equal PI('[ baidu google http://baidugoogle.com]'), [E(:link, 'http://baidugoogle.com', 'baidu google')]
     assert_equal PI('a[]'), ['a[]']
+  end
+
+  def test_image
     assert_equal PI('a[!/bg.jpg]'), ['a', E(:image, '/bg.jpg', '', 'none')]
     assert_equal PI('a[$/bg.jpg]'), ['a', E(:image, '/bg.jpg', '', 'right')]
     assert_equal PI('a[^/bg.jpg]'), ['a', E(:image, '/bg.jpg', '', 'left')]
