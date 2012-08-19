@@ -30,8 +30,8 @@ And you may use backslash escapes for the following characters:
 
 **Images**
 
-    [-http://fleurer-lee.com/lyah/img/splash.png]
-    [-image with alt http://fleurer-lee.com/lyah/img/splash.png]
+    [!http://fleurer-lee.com/lyah/img/splash.png]
+    [!image with alt http://fleurer-lee.com/lyah/img/splash.png]
     [^http://fleurer-lee.com/lyah/img/splash.png] # image floats in left
     [$http://fleurer-lee.com/lyah/img/splash.png] # image floats in right
 

@@ -16,7 +16,7 @@ module Faye
       [:bold,   /\A\*(?<content>.+?)\*/],
       [:deleted,/\A~(?<content>.+?)~/],
       [:italic, /\A_(?<content>.+?)_/],
-      [:link,   /\A\[\s*(?<float>-|\$|\^)?(?<content>.+?)\]/],
+      [:link,   /\A\[\s*(?<float>!|\$|\^)?(?<content>.+\s+)?(?<url>.+)\s*\]/],
     ]
 
     # -------------------------
@@ -44,7 +44,7 @@ module Faye
           when :escape
             m[:char]
           when :link 
-            parse_link(m)
+            parse_link(m.to_s, m)
           when :icode
             Element.new(:icode, m[:content])
           else
@@ -55,7 +55,7 @@ module Faye
         end
         i += 1
       end
-      return text[0..i]
+      return [text[0..i]]
     end
 
     def parse_block
@@ -128,6 +128,18 @@ module Faye
     end
 
     def parse_link(str, m)
+      if m[:float] =~ /!|\^|\$/
+        float = ({ 
+          '^' => 'left',
+          '$' => 'right',
+          '!' => 'none'
+        }[m[:float].strip])
+        Element.new(:image, m[:url], m[:content].to_s.strip, float)
+      else
+        content = m[:content]
+        content = m[:url] if m[:content].nil? or m[:content].empty?
+        Element.new(:link, m[:url].strip, content.strip)
+      end
     end
 
     # --------------------------

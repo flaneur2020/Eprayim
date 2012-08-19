@@ -114,7 +114,18 @@ class TestParser < MiniTest::Unit::TestCase
   end
 
   def test_escape
-    str = '\*a str\*'
-    assert_equal E(:doc, *PI(str)).to_html, '*a str*'
+    assert_equal PI_('\*a str\*\_\~'), '*a str*_~'
+  end
+
+  def test_link
+    assert_equal PI('[ http://google.com]'), [E(:link, 'http://google.com', 'http://google.com')]
+    assert_equal PI('[ baidu http://baidu.com]'), [E(:link, 'http://baidu.com', 'baidu')]
+    assert_equal PI('[ baidu google http://baidugoogle.com]'), [E(:link, 'http://baidugoogle.com', 'baidu google')]
+    assert_equal PI('a[]'), ['a[]']
+    assert_equal PI('a[!/bg.jpg]'), ['a', E(:image, '/bg.jpg', '', 'none')]
+    assert_equal PI('a[$/bg.jpg]'), ['a', E(:image, '/bg.jpg', '', 'right')]
+    assert_equal PI('a[^/bg.jpg]'), ['a', E(:image, '/bg.jpg', '', 'left')]
+    assert_equal PI('a[^ alt /bg.jpg]'), ['a', E(:image, '/bg.jpg', 'alt', 'left')]
+    assert_equal PI('a[^ alt bc /bg.jpg]'), ['a', E(:image, '/bg.jpg', 'alt bc', 'left')]
   end
 end
