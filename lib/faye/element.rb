@@ -1,7 +1,8 @@
 module Faye
 
+  # 
   class Element
-    TYPES = %w{ root head para quote code list olist bold strong italic icode image link }.map(&:to_sym)
+    TYPES = %w{ doc head para quote code list olist hr bold strong italic icode image link }.map(&:to_sym)
 
     attr_reader :type
     attr_reader :children
@@ -17,6 +18,11 @@ module Faye
     rescue
       false
     end
+
+    def inspect
+      "#{self.type}: #{self.children}"
+    end
   end
+
 
 end

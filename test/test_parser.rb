@@ -1,9 +1,8 @@
 require 'minitest/autorun'
 require 'test/helpers.rb'
 
-class TestElement < MiniTest::Unit::TestCase
+class TestParser < MiniTest::Unit::TestCase
   def setup
-    @r = Render::HTML
   end
 
   def test_parse_head
@@ -67,4 +66,38 @@ class TestElement < MiniTest::Unit::TestCase
     r = Parser.new(str).parse_block
     assert_equal r, Element.new(:list, 'i1', 'i2', 'i3')
   end
+
+  def test_list_with_multi_line_item
+    str = "+ i1\n  i1\n  i1\n\n  i1\n+ i2\n+ i3"
+    r = Parser.new(str).parse_block
+    assert_equal r, Element.new(:list, Element.new(:doc, *([Element.new(:para, 'i1')] * 4)), 'i2', 'i3')
+  end
+
+  def test_list_with_multi_line_item_to_html
+    str = "+ i1\n  i1\n  i1\n\n  i1\n+ i2\n+ i3"
+    r = Parser.new(str).parse_block
+    assert_equal r.to_html, "<ul><li><p>i1</p><p>i1</p><p>i1</p><p>i1</p></li><li>i2</li><li>i3</li></ul>"
+  end
+
+  def test_hr
+    str = "---\n\n---"
+    p = Parser.new(str)
+    r = p.parse_block
+    assert_equal r.to_html, "<hr/>"
+    r = p.parse_block
+    assert_equal r.to_html, "<hr/>"
+  end
+
+  def test_empty_text
+    str = ''
+    r = Parser.new(str).parse_block
+    assert_equal nil, r
+  end
+
+  def test_parse_inline
+    str = '***abc*bcd&*e*'
+    r = Parser.new('').parse_inline(str)
+    assert_equal nil, r 
+  end
+
 end

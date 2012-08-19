@@ -1,6 +1,7 @@
 $:.unshift << File.dirname(__FILE__)
 
 require 'faye/element.rb'
+require 'faye/lexer.rb'
 require 'faye/parser.rb'
 require 'faye/render.rb'
 require 'faye/render/html.rb'

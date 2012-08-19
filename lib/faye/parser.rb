@@ -2,10 +2,20 @@ module Faye
   class Parser
     BLOCK_RULES = [
       [:head,   /\A(?<level>=+)\s*(?<title>[^=#\n]*)(?:#(?<anchor>[^\n]*))?\s*/],
+      [:hr,     /\A---+\n*/],
       [:code,   /\A```(?<code>.*?)```\s*$/m],
       [:quote,  /\A(>([^\n]*)\n*)+/m],
-      [:list,   /\A(\* ([^\n]*)\n*)+/],
-      [:list,   /\A(\+ ([^\n]*)\n*)+/],
+      [:list,   /\A(\* ([^\n]*)\n*(  [^\n]*\n*)*)+/],
+      [:list,   /\A(\+ ([^\n]*)\n*(  [^\n]*\n*)*)+/],
+    ]
+
+    INLINE_RULES = [
+      [:icode,  /\A`(?<content>.+?)`/],
+      [:strong, /\A\*\*(?<content>.+?)\*\*/],
+      [:bold,   /\A\*(?<content>.+?)\*/],
+      [:deleted,/\A~(?<content>.+?)~/],
+      [:italic, /\A_(?<content>.+?)_/],
+      [:link,   /\A\[\s*(?<float>-|\$|\^)?(?<content>.+?)\]/],
     ]
 
     # -------------------------
@@ -17,7 +27,32 @@ module Faye
     def parse
     end
 
+    def parse_inline(text)
+      puts text
+      return [] if text.empty?
+      i = 0
+      while not text[i..-1].empty?
+        INLINE_RULES.each do |type, regex|
+          m = regex.match(text[i..-1])
+          next if not m
+          r = case type
+          when /link/ 
+            parse_link(m)
+          when /icode/ 
+            Element.new(:icode, m[:content])
+          else
+            Element.new(type, parse_inline(m[:content]))
+          end
+          return [r, *parse_inline(m.post_match)] if i-1 < 0
+          return [text[0..i-1], r, *parse_inline(m.post_match)]
+        end
+        i += 1
+      end
+      return text[0..i]
+    end
+
     def parse_block
+      return nil if @text_tail.empty?
       BLOCK_RULES.each do |type, regex|
         m = regex.match(@text_tail)
         next if not m
@@ -29,12 +64,12 @@ module Faye
 
     private
 
-    def parse_inline(str)
-      [str]
-    end
-
     def parse_head(str, m)
       Element.new(:head, m[:level].size, m[:title].strip, m[:anchor].to_s.strip)
+    end
+
+    def parse_hr(str, m)
+      Element.new(:hr)
     end
 
     def parse_code(str, m)
@@ -67,11 +102,23 @@ module Faye
     def parse_list(str, m)
       d = str[0]
       r = str.split("#{d} ").reject(&:empty?).map do |i|
-        i.strip
+        if i =~ /^  /
+          ps = i.split(/^  /).reject(&:empty?).map do |p|
+            Element.new(:para, *parse_inline(p.strip))
+          end
+          Element.new(:doc, *ps)
+        else
+          i.strip
+        end
       end
       t = d == '+'? :list : :olist
       Element.new(t, *r)
     end
+
+    def parse_link(str, m)
+    end
+
+    # --------------------------
 
   end
 end
