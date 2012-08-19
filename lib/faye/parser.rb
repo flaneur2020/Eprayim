@@ -10,6 +10,7 @@ module Faye
     ]
 
     INLINE_RULES = [
+      [:escape, /\A\\(?<char>[\*\\`\+_~])/],
       [:icode,  /\A`(?<content>.+?)`/],
       [:strong, /\A\*\*(?<content>.+?)\*\*/],
       [:bold,   /\A\*(?<content>.+?)\*/],
@@ -25,6 +26,11 @@ module Faye
     end
 
     def parse
+      elements = []
+      while element = self.parse_block
+        elements << element
+      end
+      return Element.new(:doc, *elements)
     end
 
     def parse_inline(text)
@@ -35,9 +41,11 @@ module Faye
           m = regex.match(text[i..-1])
           next if not m
           r = case type
-          when /link/ 
+          when :escape
+            m[:char]
+          when :link 
             parse_link(m)
-          when /icode/ 
+          when :icode
             Element.new(:icode, m[:content])
           else
             Element.new(type, *parse_inline(m[:content]))

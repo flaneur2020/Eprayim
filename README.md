@@ -6,8 +6,6 @@ In the beginning when I was a young boy whom has never heard Markdown, it's a ni
 
 So the wheel is re-reinvented.
 
-Why not markdown? Markdown rocks, but it has few support for writing **chapters**. I wanna break my documents into seperate files, and generate TOC easily. If anyone has idea on the best practise on writing chapters in Markdown, I will stop this wheel.
-
 (**Note**: All belows are under construction.)
 
 ## Grammar

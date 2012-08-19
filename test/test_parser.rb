@@ -112,4 +112,9 @@ class TestParser < MiniTest::Unit::TestCase
     str = '*b_bibi_b~bdbd~*rr'
     assert_equal PI(str), [E(:bold, 'b', E(:italic, 'bibi'), 'b', E(:deleted, 'bdbd')), 'rr'] 
   end
+
+  def test_escape
+    str = '\*a str\*'
+    assert_equal E(:doc, *PI(str)).to_html, '*a str*'
+  end
 end
