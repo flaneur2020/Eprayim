@@ -11,7 +11,7 @@ So the wheel is re-reinvented.
 ## Usage
 
 ```ruby
-require 'lib/eprayim'
+require 'eprayim'
 
 doc = Eprayim::Doc.new('hello _world_')
 doc.to_html # => 'hello <em>world</em>'

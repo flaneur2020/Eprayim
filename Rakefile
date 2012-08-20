@@ -8,3 +8,8 @@ task :test do
     require fn
   end
 end
+
+task :gem do
+  sh 'gem build eprayim.gemspec'
+end
+
