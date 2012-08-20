@@ -13,4 +13,5 @@ Gem::Specification.new do |s|
   s.rubygems_version = '1.8.24'
   s.has_rdoc = false
   s.extra_rdoc_files = ["README.md"]
+  s.add_development_dependency "minitest", "~> 3.2"
 end
