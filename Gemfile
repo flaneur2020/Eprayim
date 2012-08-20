@@ -1,1 +1,3 @@
-gem 'minitest'
+source 'http://rubygems.org'
+
+gemspec
