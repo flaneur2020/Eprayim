@@ -8,6 +8,12 @@ So the wheel is re-reinvented.
 
 (**Note**: All belows are under construction.)
 
+## Installation
+
+```
+gem i eprayim
+```
+
 ## Usage
 
 ```ruby
