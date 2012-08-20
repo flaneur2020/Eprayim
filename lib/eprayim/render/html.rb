@@ -28,7 +28,13 @@ module Eprayim
 
   class Element
     def to_html
-      Render::HTML.render(self)
+      @html ||= Render::HTML.render(self)
+    end
+  end
+
+  class Doc
+    def to_html
+      @html ||= parser.parse().to_html
     end
   end
 

@@ -9,9 +9,12 @@ module Eprayim
   class Doc
     # the origin text before parse
     attr_reader :text
+    attr_reader :parser
 
     def initialize(text)
       @text = text
+      @parser = Parser.new(@text)
     end
+
   end
 end

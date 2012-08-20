@@ -34,7 +34,7 @@ module Eprayim
     end
 
     def parse_inline(text)
-      return [] if text.empty?
+      return [] if text.to_s.empty?
       i = 0
       while not text[i..-1].empty?
         INLINE_RULES.each do |type, regex|
@@ -59,7 +59,7 @@ module Eprayim
     end
 
     def parse_block
-      return nil if @text_tail.empty?
+      return nil if @text_tail.to_s.empty?
       BLOCK_RULES.each do |type, regex|
         m = regex.match(@text_tail)
         next if not m

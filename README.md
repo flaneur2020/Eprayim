@@ -13,6 +13,8 @@ So the wheel is re-reinvented.
 ```ruby
 require 'lib/eprayim'
 
+doc = Eprayim::Doc.new('hello _world_')
+doc.to_html # => 'hello <em>world</em>'
 ```
 
 ## Grammar
@@ -22,8 +24,8 @@ require 'lib/eprayim'
 + `*bold*`: **bold**
 + `**strong**`: **strong**
 + `_italic_`: *italic*
-+ ~deleted~: <del>deleted</del>
-+ \``inline code`\`: `inline code`
++ `~deleted~`: <del>deleted</del>
++ `\`inline code\``: `inline code`
 
 And you may use backslash escapes for the following characters:
 
