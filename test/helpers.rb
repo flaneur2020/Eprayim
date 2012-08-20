@@ -23,3 +23,7 @@ end
 def PB(*args)
   Parser.new(*args).parse_block
 end
+
+def PP(*args)
+  Parser.new(*args).parse.to_html
+end

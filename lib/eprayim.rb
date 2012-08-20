@@ -12,6 +12,7 @@ module Eprayim
     attr_reader :parser
 
     def initialize(text)
+      raise "#{text} should be a string." if not [String, nil].include? text.class
       @text = text
       @parser = Parser.new(@text)
     end

@@ -22,7 +22,8 @@ module Eprayim
     # -------------------------
 
     def initialize(text)
-      @text_tail = text.clone
+      raise "#{text} should be a string." if not [String, nil].include? text.class
+      @text_tail = text.to_s.clone
     end
 
     def parse
@@ -59,7 +60,7 @@ module Eprayim
     end
 
     def parse_block
-      return nil if @text_tail.to_s.empty?
+      return nil if @text_tail.empty?
       BLOCK_RULES.each do |type, regex|
         m = regex.match(@text_tail)
         next if not m
@@ -67,6 +68,7 @@ module Eprayim
         return self.send("parse_#{type}", m.to_s, m)
       end
       p, @text_tail = @text_tail.split(/\n\r?\n\r?/, 2)
+      @text_tail = '' if @text_tail.nil?
       return parse_para(p, nil)
     end
 

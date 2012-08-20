@@ -132,4 +132,8 @@ class TestParser < MiniTest::Unit::TestCase
     assert_equal PI('a[^ alt /bg.jpg]'), ['a', E(:image, '/bg.jpg', 'alt', 'left')]
     assert_equal PI('a[^ alt bc /bg.jpg]'), ['a', E(:image, '/bg.jpg', 'alt bc', 'left')]
   end
+
+  def test_paras
+    assert_equal PP("aa\n\nbb\nc"), "<p>aa</p><p>bb\nc</p>"
+  end
 end
