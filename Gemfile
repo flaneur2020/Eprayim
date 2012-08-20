@@ -1,2 +1,1 @@
-gem 'treetop'
 gem 'minitest'

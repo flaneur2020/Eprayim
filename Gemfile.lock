@@ -1,14 +1,9 @@
 GEM
   specs:
     minitest (3.2.0)
-    polyglot (0.3.3)
-    treetop (1.4.10)
-      polyglot
-      polyglot (>= 0.3.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   minitest
-  treetop
