@@ -6,8 +6,6 @@ In the beginning when I was a young boy whom had never heard Markdown, it's a ni
 
 So the wheel is re-reinvented.
 
-(**Note**: All belows are under construction.)
-
 ## Installation
 
 ```
