@@ -16,7 +16,7 @@ module Eprayim
     def ==(other)
       return self.type == other.type && self.children == other.children
     rescue
-      false
+      return false
     end
 
     def inspect
