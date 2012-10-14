@@ -8,6 +8,8 @@ class TestParser < MiniTest::Unit::TestCase
   def test_peek_head
     str = "= h #a"
     assert_equal ['h', 'a'], P(str).peek_head
+    str = "\n==\n\n= h #a"
+    assert_equal ['h', 'a'], P(str).peek_head
   end
 
   def test_parse_head
