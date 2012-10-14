@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = "eprayim"
-  s.version = "0.1"
+  s.version = "0.1.1"
   s.author = "fleuria"
   s.email = 'me.ssword@gmail.com'
   s.homepage = "http://github.com/Fleurer/Eprayim"
@@ -10,7 +10,6 @@ Gem::Specification.new do |s|
   s.required_ruby_version = ">=1.9.1"
   s.files = Dir.glob("{LICENSE,README.md,lib/**/*.rb,test/*.rb}")
   s.require_paths = ["lib"]
-  s.rubygems_version = '1.8.24'
   s.has_rdoc = false
   s.extra_rdoc_files = ["README.md"]
   s.add_development_dependency "minitest", "~> 3.2"

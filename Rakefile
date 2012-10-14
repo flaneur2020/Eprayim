@@ -9,6 +9,7 @@ task :test do
   end
 end
 
+desc 'build gem'
 task :gem do
   sh 'gem build eprayim.gemspec'
 end
