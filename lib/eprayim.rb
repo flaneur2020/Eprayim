@@ -19,24 +19,12 @@ module Eprayim
     end
 
     def title
-      @title or self.peek_title[0]
+      @title ||= @parser.peek_head[0]
     end
 
     def anchor
-      @anchor or self.peek_title[1]
+      @anchor ||= @parser.peek_head[1]
     end
 
-    def peek_title
-      return [@title, @anchor] if @title
-      @input.each_line do |line|
-        m = line.match Parser::BLOCK_RULES[0][1]
-        if m and m[:level] == '='
-          @title = m[:title].strip
-          @anchor = m[:anchor].strip
-          return [@title, @anchor]
-        end
-      end
-      return [nil, nil]
-    end
   end
 end

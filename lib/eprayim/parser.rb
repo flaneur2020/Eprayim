@@ -2,8 +2,10 @@ require 'stringio'
 
 module Eprayim
   class Parser
+    HEAD_RULE = /\A(?<level>=+)\s*(?<title>[^=#\n]*)(?:#(?<anchor>[^\n]*))?\s*/
+
     BLOCK_RULES = [
-      [:head,   /\A(?<level>=+)\s*(?<title>[^=#\n]*)(?:#(?<anchor>[^\n]*))?\s*/],
+      [:head,   HEAD_RULE],
       [:hr,     /\A---+\n*/],
       [:code,   /\A```(?<code>.*?)```\s*$/m],
       [:quote,  /\A(>([^\n]*)\n*)+/m],
@@ -31,6 +33,22 @@ module Eprayim
       else
         raise "#{input.inspect} should be a string."
       end
+    end
+
+    # peek the title and anchor without reading
+    # all the content.
+    def peek_head
+      return [@title, @anchor] if @title
+      @input.rewind
+      @input.each_line do |line|
+        m = line.match HEAD_RULE
+        if m and m[:level] == '='
+          @title = m[:title].strip
+          @anchor = m[:anchor].strip
+          return [@title, @anchor]
+        end
+      end
+      return [nil, nil]
     end
 
     def parse

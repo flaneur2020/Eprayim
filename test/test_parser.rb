@@ -5,6 +5,11 @@ class TestParser < MiniTest::Unit::TestCase
   def setup
   end
 
+  def test_peek_head
+    str = "= h #a"
+    assert_equal ['h', 'a'], P(str).peek_head
+  end
+
   def test_parse_head
     str = "== h "
     r = Parser.new(str).parse_block
