@@ -4,6 +4,10 @@ require 'lib/eprayim.rb'
 
 include Eprayim
 
+def D(*args)
+  Doc.new(*args)
+end
+
 def E(*args)
   Element.new(*args)
 end

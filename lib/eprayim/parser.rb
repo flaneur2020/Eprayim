@@ -1,3 +1,5 @@
+require 'stringio'
+
 module Eprayim
   class Parser
     BLOCK_RULES = [
@@ -21,9 +23,14 @@ module Eprayim
 
     # -------------------------
 
-    def initialize(text)
-      raise "#{text} should be a string." if not [String, nil].include? text.class
-      @text_tail = text.to_s.clone
+    def initialize(input)
+      @input = if input.nil? or input.is_a? String
+        StringIO.new(input.to_s)
+      elsif input.respond_to?(:read)
+        input.clone
+      else
+        raise "#{input.inspect} should be a string."
+      end
     end
 
     def parse
@@ -60,6 +67,7 @@ module Eprayim
     end
 
     def parse_block
+      @text_tail = @input.read if @text_tail.nil?
       return nil if @text_tail.empty?
       BLOCK_RULES.each do |type, regex|
         m = regex.match(@text_tail)
